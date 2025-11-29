@@ -3,7 +3,7 @@ version: 2
 models:
   - name: customers
     description: One record per customer.
-    columns: 
+    columns:
       - name: customer_id
         description: Primary Key
         data_tests:
@@ -11,14 +11,14 @@ models:
           - not_null
       - name: first_order_date
         description: NULL when a customer has not yet placed an order.
-      
+
   - name: stg_customer
     columns:
       - name: customer_id
         data_tests:
           - unique
           - not_null
-  
+
   - name: stg_order
     columns:
       - name: order_id
@@ -29,11 +29,12 @@ models:
       - name: status
         data_tests:
           - accepted_values:
-              values: ['placed', 'shipped', 'completed', 'return_pending', 'returned']
-      
+              arguments:
+                values: ['placed', 'shipped', 'completed', 'return_pending', 'returned']
       - name: customer_id
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_customer')
-              field: customer_id
+              arguments:
+                to: ref('stg_customer')
+                field: customer_id
